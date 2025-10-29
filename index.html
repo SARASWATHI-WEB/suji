@@ -1,0 +1,412 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Saraswathi Portfolio</title>
+  <meta name="description" content="A beautiful single-page portfolio to showcase Figma projects (PNG). Replace image files and copy to personalize." />
+  <style>
+    :root{
+      --bg:#0f1724; --card:#0b1220; --muted:#98a0b3; --accent:#7c5cff; --glass: rgba(255,255,255,0.04);
+      --maxw:1200px;
+      --radius:16px;
+      --ff: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;font-family:var(--ff);background:linear-gradient(180deg,var(--bg) 0%, #071025 100%);color:#e6eef8}
+    .container{max-width:var(--maxw);margin:0 auto;padding:36px 20px}
+
+    header{display:flex;align-items:center;justify-content:space-between;gap:16px}
+    .brand{display:flex;gap:14px;align-items:center}
+    .logo{width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#55d3ff);display:flex;align-items:center;justify-content:center;font-weight:700;color:#071025}
+    header h1{font-size:20px;margin:0}
+    header p{margin:0;color:var(--muted);font-size:13px}
+
+    .hero{display:grid;grid-template-columns:1fr 420px;gap:28px;align-items:center;margin-top:26px}
+    .hero-card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:28px;border-radius:var(--radius);backdrop-filter: blur(6px);box-shadow:0 8px 30px rgba(2,6,23,0.6)}
+    .hero h2{margin:0 0 8px 0;font-size:28px}
+    .hero p{color:var(--muted);line-height:1.5}
+    .cta-row{display:flex;gap:12px;margin-top:18px}
+    .btn{padding:10px 16px;border-radius:12px;border:0;cursor:pointer;font-weight:600}
+    .btn-primary{background:var(--accent);color:#071025}
+    .btn-outline{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted)}
+
+    .profile{display:flex;flex-direction:column;gap:12px}
+    .avatar{width:70%;border-radius:12px;overflow:hidden;min-height:160px;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,#071b2a,#071428)}
+    .avatar img{width:100%;height:50%;object-fit:cover}
+    .meta{display:flex;justify-content:space-between;align-items:center}
+
+    /* Gallery */
+    .filters{display:flex;gap:8px;margin:28px 0 14px}
+    .pill{padding:8px 12px;border-radius:999px;background:var(--glass);border:1px solid rgba(255,255,255,0.03);cursor:pointer;font-weight:600;color:var(--muted)}
+
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:14px;padding:12px;overflow:hidden;transition:transform .25s, box-shadow .25s;border:1px solid rgba(255,255,255,0.03)}
+    .card:hover{transform:translateY(-8px);box-shadow:0 18px 50px rgba(2,6,23,0.6)}
+    .thumb{width:100%;height:220px;border-radius:10px;overflow:hidden;background:#071024}
+    .thumb img{width:100%;height:100%;object-fit:cover;display:block}
+    .card h3{margin:10px 0 6px 0;font-size:16px}
+    .card p{margin:0;color:var(--muted);font-size:13px}
+
+    /* Lightbox */
+    .lightbox{position:fixed;inset:0;background:rgba(2,6,23,0.7);display:none;align-items:center;justify-content:center;padding:20px;z-index:60}
+    .lightbox.open{display:flex}
+    .lightbox-inner{max-width:1100px;width:100%;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:18px;border-radius:14px;display:grid;grid-template-columns:1fr 320px;gap:16px}
+    .lb-image{max-height:75vh;overflow:hidden;border-radius:10px}
+    .lb-image img{width:100%;height:100%;object-fit:contain}
+    .lb-meta h3{margin:0 0 6px 0}
+    .close{position:absolute;right:20px;top:20px;padding:8px;border-radius:8px;background:rgba(255,255,255,0.03);cursor:pointer}
+
+    footer{margin-top:40px;padding:24px;border-radius:12px;background:transparent;display:flex;justify-content:space-between;align-items:center;color:var(--muted)}
+
+    @media (max-width:1000px){
+      .hero{grid-template-columns:1fr}
+      .grid{grid-template-columns:repeat(2,1fr)}
+      .hero-card{order:2}
+    }
+    @media (max-width:640px){
+      .grid{grid-template-columns:1fr}
+      .hero{gap:16px}
+      header{flex-direction:column;align-items:flex-start}
+    }
+
+  span{
+    color:#7c5cff; 
+  }
+
+.zoom-in-image {
+  transform: scale(0.5);
+  animation: zoomIn 1s forwards;
+}
+
+@keyframes zoomIn {
+  0% {
+    transform: scale(0.5);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.elegant-fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: elegantFadeIn 1s forwards;
+}
+
+@keyframes elegantFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <div class="brand">
+        <div class="logo">CV</div>
+        <div>
+          <h1>Saraswathi Full Stack Developer — Portfolio</h1>
+          <p>Building seamless, clean, and delightful digital interfaces</p>
+        </div>
+
+      </div>
+      <nav>
+        <button class="btn btn-outline" onclick="scrollToSection('gallery')">Work</button>
+        <button class="btn btn-outline" onclick="scrollToSection('about')">About</button>
+        <a href="https://github.com/SARASWATHI-WEB">
+        <button class="btn btn-primary" >Github</button>
+        </a>
+      </nav>
+    </header>
+    <section class="hero">
+      <div class="hero-card ">
+        <h2>Hi, I'm <span> Saraswathi </span> </h2>
+            <h1> I'm a <span class="auto-type"> </span> </h1>
+        
+        <p> A versatile Full Stack Developer and UI/UX Designer (Figma) with a passion for crafting seamless digital experiences. I specialize in creating intuitive UI designs, prototypes, and high-fidelity screens for mobile and web applications, focusing on usability, clear visual hierarchy, and delightful micro-interactions.</p>
+
+        
+
+        <div class="cta-row">
+          <button class="btn btn-primary" onclick="scrollToSection('gallery')">View Work</button>
+          <a href="https://github.com/SARASWATHI-WEB">
+        <button class="btn btn-primary" > View Project</button>
+        </a> 
+          <button class="btn btn-outline" onclick="downloadResume()">Download Resume</button>
+        </div>
+
+              <div style="margin-top:18px;border-radius:12px;padding:12px;background:rgba(255,255,255,0.02);display:flex;gap:12px;align-items:center;">
+          <div style="flex:0 0 56px;height:56px;border-radius:10px;background:linear-gradient(135deg,#ffd86b,#ff6b9f);display:flex;align-items:center;justify-content:center;color:#071025;font-weight:700">UI</div>
+         
+          <div>
+            <div style="font-weight:700">Available for freelance</div>
+            <div style="color:var(--muted);font-size:13px">Open to short-term projects or collaborations</div>
+          </div>
+        </div>
+      </div>
+
+      <aside class="profile">
+        <div class="avatar">
+          <!-- Replace avatar.png with your profile image -->
+
+           <div class="image-container">
+  <img src="Saraswathi.png" alt="Your avatar" class="zoom-in-image">
+  <div class=""> </div>
+</div>
+          
+        </div>
+        <div class="hero-card" style="padding:12px">
+          <div class="meta">
+            <div>
+              <div style="font-weight:700">Contact</div>
+              <div style="color:var(--muted);font-size:13px">sarasuji03@gmail.com</div>
+            </div>
+            <div style="text-align:right">
+              <div style="font-weight:700">Location</div>
+              <div style="color:var(--muted);font-size:13px">Chennai, India</div>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <section id="gallery">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+        <h2 style="margin:18px 0 6px 0">Selected Certificates</h2>
+        <div style="color:var(--muted)">Tip: click any card to open a larger preview</div>
+      </div>
+
+      <div class="filters">
+        <div class="pill" onclick="filter('all')">All</div>
+        <div class="pill" onclick="filter('skills')">Skills</div>
+        <div class="pill" onclick="filter('intern')">Internship</div>
+        <div class="pill" onclick="filter('Achievement')">Achievement</div>
+      </div>
+<div class="elegant-fade-in"> 
+      <div class="grid" id="grid">
+        <!-- Replace these images with your exported PNGs. Use the data attributes for filtering & content -->
+        <div class="card" data-type="skills" data-title="Web Development — Zealyen InfoTech" data-desc="Hero section with attention-grabbing visuals and clear call-to-action." data-img="web.jpg">
+          <div class="thumb"><img src="web.jpg" alt="Project 1"/></div>
+          <h3>Web Development — Zealyen InfoTech</h3>
+          <p>Responsive design for seamless user experience.</p>
+        </div>
+
+        <div class="card" data-type="skills" data-title="UI/UX Desgin and development" data-desc="Designing interactive filters and controls that respond to user input, ensuring a seamless user experience." data-img="figma.jpg">
+          <div class="thumb"><img src="figma.jpg" alt="Project 3"/></div>
+          <h3>UI/UX Desgin and development</h3>
+          <p>Crafting intuitive interfaces for complex data sets.</p>
+        </div>
+ <div class="card" data-type="skills" data-title="Cyber Security" data-desc="Real-time updates and alerts" data-img="robotics.jpg">
+          <div class="thumb"><img src="robotics.jpg" alt="Project 6"/></div>
+          <h3>Cyber Security</h3>
+          <p>Customizable filters for threat analysis.</p>
+        </div> 
+
+        <div class="card" data-type="Achievement" data-title="UX/UI Design — Award" data-desc=" A social app featuring a chat system, music, groups, and community features."
+          data-img="bestaward.jpg">
+          <div class="thumb"><img src="bestaward.jpg" alt="Project 2"/></div>
+          <h3>UX/UI Design — Award</h3>
+          <p>Best Student Award for outstanding UX/UI design work on the Unitap App project, created using Figma.</p>
+        </div>
+
+        <div class="card" data-type="intern" data-title="Full Stack Developer —  Python" data-desc="Proven track record of delivering high-quality projects." data-img="intership.jpg">
+          <div class="thumb"><img src="intership.jpg" alt="Project 4"/></div>
+          <h3>Full Stack Developer —  Python</h3>
+          <p>Excellent problem-solving and debugging skills.</p>
+        </div>
+
+        <div class="card" data-type="skills" data-title="Project" data-desc="- Factors affecting yeast yield include:
+    - Nutrient availability (e.g., sugars, nitrogen sources)
+    - Fermentation conditions (e.g., temperature, pH, oxygen levels)
+    - Yeast strain and genetics." data-img="internpro.jpg">
+          <div class="thumb"><img src="internpro.jpg" alt="Project 5"/></div>
+          <h3>Internship Project</h3>
+          <p>Yeast yield refers to the amount of yeast biomass or product obtained from a fermentation process.</p>
+        </div>
+
+
+  <div class="card" data-type="Achievement" data-title="Masters — Silver Medal" data-desc="Awarded for outstanding academic performance in a Postgraduate (PG) degree program." data-img="pg.jpg">
+          <div class="thumb"><img src="pg.jpg" alt="Project 2"/></div>
+          <h3>Masters — Silver Medal </h3>
+          <p>Achieved Second Rank in the program, demonstrating exceptional academic excellence and dedication.</p>
+        </div>
+
+          <div class="card" data-type="Achievement" data-title="Certificate of Merit" data-desc="Awarded for outstanding academic performance in semester." data-img="merit2.jpg">
+          <div class="thumb"><img src="merit2.jpg" alt="Project 2"/></div>
+          <h3>Certificate of Merit</h3>
+          <p> This certificate acknowledges exceptional academic excellence and dedication to studies.</p>
+        </div>
+  <div class="card" data-type="Achievement" data-title="Certificate of Merit" data-desc="Exceptional performance during year 2021 - 2022" data-img="merit3.jpg">
+          <div class="thumb"><img src="merit3.jpg" alt="Project 2"/></div>
+          <h3>Certificate of Merit</h3>
+          <p>Demonstrated academic commitment and hard work.</p>
+        </div>
+
+         
+       </div>
+
+      </div>
+    </section>
+
+    <!-- Lightbox -->
+    <div id="lightbox" class="lightbox" onclick="closeLightbox(event)">
+      <div class="close" onclick="closeLightbox(event)">✕</div>
+      <div class="lightbox-inner" onclick="event.stopPropagation()">
+        <div class="lb-image"><img id="lb-img" src="" alt=""/></div>
+        <div class="lb-meta">
+          <h3 id="lb-title">Title</h3>
+          <p id="lb-desc" style="color:var(--muted)">Description</p>
+          <div style="margin-top:14px;display:flex;gap:10px">
+            <button class="btn btn-primary" onclick="downloadCurrent()">Download PNG</button>
+            <button class="btn btn-outline" onclick="openInNewTab()">Open Image</button>
+          </div>
+          <div style="margin-top:18px;color:var(--muted);font-size:13px">Tip: Replace the placeholder project images (project1.png, project2.png...) with your exported PNG files in the same folder.</div>
+        </div>
+      </div>
+    </div>
+
+    <section id="about" style="margin-top:28px">
+      <div style="display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap">
+        <div style="flex:1;min-width:280px" class="hero-card">
+
+
+
+
+          <h3>About Me</h3>
+          <p style="color:var(--muted)">I'm a Full Stack Developer & UI/UX Designer (Figma) who crafts seamless digital experiences. I build responsive web applications and design intuitive interfaces, component libraries, and interactive prototypes. My workflow: strategy → desgin → prototype → development → testing → deployment & maintenance.</p>
+          <ul style="color:var(--muted);margin-top:10px">
+            <li>• Front-end: HTML, CSS, JavaScript, React</li>
+            <li>• Back-end: Python (Django/Flask), PHP</li>
+            <li>• Database: MySQL</li>
+            <li>• Tools: Figma</li>
+            <li>• Available: Freelance / Contract / Full Time</li>
+          </ul>
+        </div>
+        <div style="flex:0 0 320px" class="hero-card">
+        <a href="https://github.com/SARASWATHI-WEB">
+        <button class="btn btn-primary" > Project</button>
+        </a> 
+          <p style="color:var(--muted)"></p>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">
+            <div class="pill">India.gov.in Website Redesign (UI/UX)</div>
+            <div class="pill">Resourse Repository</div>
+            <div class="pill">Yeast Yield Estimator & Molasses Quality Analyzer</div>
+            
+            
+          </div>
+        </div>
+      </div>
+    </section>
+
+     <section id="github" style="margin-top:28px">
+    
+       
+      
+    </section> 
+
+    <footer>
+      <div>© <span id="year"></span> Saraswathi — Developer</div>
+      <div style="color:var(--muted)"> Made with ❤️ by Saraswathi .</div>
+    </footer>
+  </div>
+
+  <script>
+    // small utilities
+    document.getElementById('year').innerText = new Date().getFullYear();
+
+    function scrollToSection(id){
+      document.getElementById(id).scrollIntoView({behavior:'smooth'});
+    }
+
+    // Lightbox logic
+    const grid = document.getElementById('grid');
+    const lb = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lb-img');
+    const lbTitle = document.getElementById('lb-title');
+    const lbDesc = document.getElementById('lb-desc');
+    let currentImg = '';
+
+    grid.addEventListener('click', (e)=>{
+      const card = e.target.closest('.card');
+      if(!card) return;
+      const img = card.getAttribute('data-img');
+      const title = card.getAttribute('data-title');
+      const desc = card.getAttribute('data-desc');
+      openLightbox(img,title,desc);
+    });
+
+    function openLightbox(img,title,desc){
+      lb.classList.add('open');
+      lbImg.src = img;
+      lbTitle.innerText = title;
+      lbDesc.innerText = desc;
+      currentImg = img;
+    }
+    function closeLightbox(e){
+      e.stopPropagation && e.stopPropagation();
+      lb.classList.remove('open');
+      lbImg.src = '';
+    }
+
+    function downloadCurrent(){
+      if(!currentImg) return;
+      const a = document.createElement('a');
+      a.href = currentImg;
+      a.download = currentImg.split('/').pop();
+      a.click();
+    }
+    function openInNewTab(){
+      if(!currentImg) return; window.open(currentImg,'_blank');
+    }
+
+    function filter(type){
+      const cards = Array.from(document.querySelectorAll('.grid .card'));
+      if(type === 'all') cards.forEach(c=>c.style.display='block');
+      else cards.forEach(c=> c.getAttribute('data-type') === type ? c.style.display='block' : c.style.display='none');
+    }
+function downloadResume(){
+const url = 'saraswathi.pdf';
+const a = document.createElement('a');
+a.href = url;
+a.download = 'sara.pdf';
+document.body.appendChild(a);
+a.click();
+a.remove();
+}
+    
+    function sendForm(){
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const message = document.getElementById('message').value;
+      alert('Thanks ' + name + '! This demo form will not actually send a message — integrate with your email provider or backend to enable it.');
+      // clear
+      document.getElementById('name').value='';
+      document.getElementById('email').value='';
+      document.getElementById('message').value='';
+    }
+  </script>
+
+<script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
+       
+       <script>
+          var typed = new Typed(".auto-type", {
+            strings: [ "Developer", "Software Engineer"],
+            typeSpeed: 20,
+            backSpeed: 20,
+            loop: true
+          })
+          </script>
+  
+</body>
+</html>
